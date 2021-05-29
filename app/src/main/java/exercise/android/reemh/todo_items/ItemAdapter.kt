@@ -1,6 +1,5 @@
 package exercise.android.reemh.todo_items
 
-import android.content.ClipData
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,8 +8,9 @@ import java.io.Serializable
 
 class ItemAdapter: RecyclerView.Adapter<ItemViewHolder>(), Serializable {
     private var _todoItemsHolder: TodoItemsHolder? = null
-    public var onTodoItemDeleteClickCallback: ((TodoItem) -> Unit)? = null
-    public var onTodoItemCheckBoxClickCallback: ((TodoItem) -> Unit)? = null
+    var onTodoItemDeleteClickCallback: ((TodoItem) -> Unit)? = null
+    var onTodoItemCheckBoxClickCallback: ((TodoItem) -> Unit)? = null
+    var onTodoTextClickCallback: ((TodoItem)->Unit)? = null
 
     fun setTodoItems(holder: TodoItemsHolder)
     {
@@ -64,6 +64,11 @@ class ItemAdapter: RecyclerView.Adapter<ItemViewHolder>(), Serializable {
         }
         holder.checkBox.setOnClickListener{
             val callback = onTodoItemCheckBoxClickCallback ?: return@setOnClickListener
+            callback(item)
+        }
+
+        holder.text.setOnClickListener {
+            val callback = onTodoTextClickCallback ?:return@setOnClickListener
             callback(item)
         }
     }

@@ -1,5 +1,6 @@
 package exercise.android.reemh.todo_items
 
+import androidx.lifecycle.LiveData
 import java.io.Serializable
 
 // TODO: feel free to add/change/remove methods as you want
@@ -10,6 +11,7 @@ interface TodoItemsHolder : Serializable {
     /** Get a copy of the current items list  */
     var currentItems: MutableList<TodoItem>?
 
+    val todoLiveDataPublic: LiveData<MutableList<TodoItem>>
     /**
      * Creates a new TodoItem and adds it to the list, with the @param description and status=IN-PROGRESS
      * Subsequent calls to [getCurrentItems()] should have this new TodoItem in the list
@@ -23,10 +25,12 @@ interface TodoItemsHolder : Serializable {
     fun markItemInProgress(item: TodoItem?)
 
     /** delete the @param item  */
-    fun deleteItem(item: TodoItem?)
+    fun deleteItem(id: String)
 
     /**
      * get specific item
      */
     fun getItem(index: Int): TodoItem?
+
+    fun editName(id: String, newName: String)
 }
